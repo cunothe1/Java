@@ -1,6 +1,6 @@
 # Java
 
-#last edit 2-9-18 Cuno
+# last edit 2-9-18 Cuno
 
 The world generation update v1.0.1
 
@@ -8,7 +8,7 @@ Added world generator except a few things
 
 
 
-#path to victory (v1.0.1)
+# path to victory (v1.0.1)
 
 v1.1 working world generator
 
