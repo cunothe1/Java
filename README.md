@@ -1,32 +1,32 @@
 # Java
 
-# last edit 2-9-18 Cuno
+# last edit 3-9-18 Cuno
 
-The world generation update v1.0.1
-
-Added world generator except a few things
+The world generation update v1.0.3
 
 
 
-# path to victory (v1.0.1)
 
-v1.1 working world generator
+# path to victory (v1.0.3)
 
-v1.2 world graphics
+v1.1 The World Generation update
 
-v1.3 all units implemented
+v1.2 The More than a World update
 
-v1.4 unit world interaction
+v1.3 The Bonus & Modifier update
 
-v1.5 unit unit interaction
+v1.4 The War update
 
-v1.6 unit graphics
+v1.5 The Beautiful update
 
-v1.7 unit control
+v1.6 The Advanced Code update
 
-v1.8 working first gamemode
+v1.7 The Alpha update
 
-v1.9 bot
+v1.8 The Gamemodes O'Plenty update
 
-v2.0 alpha complete, base game complete
+v1.9 The Beta update
+
+v2.0 The First Release update
+
 
