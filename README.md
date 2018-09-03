@@ -32,3 +32,5 @@ v1.9 The Beta update
 v2.0 The First Release update
 
 
+
+https://github.com/acaudwell/Gource/wiki/Custom-Log-Format
