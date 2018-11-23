@@ -1,10 +1,11 @@
+package pws;
+
 import java.util.Random;
 
 public class World {
 	public static String tile[][] = new String[25][17];
-	
-	public static void main(String[] args) {
-		worldGeneration(30,25,5,10,4,10);
+	public String[][] getTile() {
+		return tile;
 	}
 	
 	/*
@@ -15,16 +16,6 @@ public class World {
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
 	}
-	/*
-	 * syntax: growPreset(type,i,j,k,l);
-	 * Types: Ravine / River
-	 */
-	public static void growPreset(String type, int i,int j,int k,int l) {
-		if (i+k>=1&&i+k<=24&&j+l>=1&&j+l<=16) { 
-			if (tile[i+k][j+l].substring(0,1)!="O"||tile[i+k][j+l].substring(0,1)!="T") {
-				if (type=="Ravine")tile[i+k][j+l] = "x"+tile[i+k][j+l].substring(1);
-				if (type=="River")tile[i+k][j+l] = "I"+tile[i+k][j+l].substring(1);
-	} 	}	}
 	/*
 	 * syntax: growSea(i,j,k,l);
 	 * Wordt gebruikt door de wereld generator, en die notities
@@ -41,29 +32,40 @@ public class World {
 			if (!tile[k][l].substring(0,1).contains("`") && !tile[k][l].substring(0,1).contains("I") && !tile[k][l].substring(0,1).contains("Y")) {
 				int m=k;
 				if (m>=i) { while (m<=i+3) {
-					if (m>=1&&m<=24) if ( tile[m][l].substring(0,1).contains("`") ) tile[m][l] = "y"+tile[m][l].substring(1);
+					if (m>=1&&m<=24) {
+						if ( tile[m][l].substring(0,1).contains("`") ) tile[m][l] = "y"+tile[m][l].substring(1);
+					}
 					m++;
 				}}
 				m=k;
 				if (m<=i) { while (m>=i-3) {
-					if (m>=1&&m<=24) if ( tile[m][l].substring(0,1).contains("`") ) tile[m][l] = "y"+tile[m][l].substring(1);
+					if (m>=1&&m<=24) {
+						if ( tile[m][l].substring(0,1).contains("`") ) tile[m][l] = "y"+tile[m][l].substring(1);
+					}
 					m--;
 				}}
 				m=l;
 				if (m>=j) { while (m<=j+3) {
-					if (m>=1&&m<=16) if ( tile[k][m].substring(0,1).contains("`") ) tile[k][m] = "y"+tile[k][m].substring(1);
+					if (m>=1&&m<=16) {
+						if ( tile[k][m].substring(0,1).contains("`") ) tile[k][m] = "y"+tile[k][m].substring(1);
+					}
 					m++;
 				}}
 				m=l;
 				if (m<=j) { while (m>=j-3) {
-					if (m>=1&&m<=16) if ( tile[k][m].substring(0,1).contains("`") ) tile[k][m] = "y"+tile[k][m].substring(1);
+					if (m>=1&&m<=16) {
+						if ( tile[k][m].substring(0,1).contains("`") ) tile[k][m] = "y"+tile[k][m].substring(1);
+					}
 					m--;
-	}	}	}	}}
+				}}
+				}
+		}
+	}
 	
 	/*
-	 * Syntax: worldGeneration(forest,dunes,mountains,river,ravine,ocean)
+	 * De wereld generator
 	 */
-	public static void worldGeneration(int pforest, int pdunes, int pmountains, int priver, int pravine, int pocean) {
+	public static void worldGeneration() {
 		//tile[][]="<terrain><moveable><attackable><impassable>"
 		//Als eerst worden wat waardes op false gezet
 		//bijv of er een basis in het tweede kwadrant is, b2
@@ -78,51 +80,52 @@ public class World {
 		boolean temple = false;
 		//als eerst wordt overal een standaard waarde neergezet 
 		//om nullpointerexceptions te stoppen
-		for (i=1;i<=24;i++) { for (j=1;j<=16;j++) { tile[i][j]="0";} }
+		for (i=1;i<=24;i++) {
+			for (j=1;j<=16;j++) {
+				tile[i][j]="0";
+			}}
 		//dit is waar het echt begint
-		for (i=1;i<=24;i++) { for (j=1;j<=16;j++) {
+		for (i=1;i<=24;i++) {
+			for (j=1;j<=16;j++) {
 				int r;
 				//verdeling van spawnkans van landschappen
 				//in promille
 				r = randomRange(0,1000);
-				int p=1000;
-				if (r>p-pforest&&r<=p)tile[i][j]="i"+tile[i][j].substring(1);  //forest
-				p-=pforest;
-				if (r>p-pdunes&&r<=p)tile[i][j]="-"+tile[i][j].substring(1); //dunes
-				p-=pdunes;
-				if (r>p-pmountains*10&&r<=p)tile[i][j]="M"+tile[i][j].substring(1); //mountains
-				p-=pmountains*10;
-				if (r>p-priver&&r<=p)tile[i][j]="~"+tile[i][j].substring(1); //river
-				p-=priver;
-				if (r>p-pravine&&r<=p)tile[i][j]="X"+tile[i][j].substring(1); //ravine
-				p-=pravine;
-				if (r>p-pocean&&r<=p) if (j==1||j==16) tile[i][j]="Y"+tile[i][j].substring(1); //oceaan
-				p-=pocean;
+
+
+				if (r>=0&&r<=610) tile[i][j]="`"+tile[i][j].substring(1); //plains
+				if (r>=610&&r<=640)tile[i][j]="i"+tile[i][j].substring(1); //forest
+				if (r>=640&&r<=670)tile[i][j]="-"+tile[i][j].substring(1); //dunes
+				if (r>=670&&r<=720)tile[i][j]="M"+tile[i][j].substring(1); //mountains
+				if (r>=720&&r<=735)tile[i][j]="~"+tile[i][j].substring(1); //water
+				if (r>=735&&r<=740)tile[i][j]="X"+tile[i][j].substring(1); //ravine
+				if (r>=740&&r<=800) { 
+					//kijken of het wel aan de zijkant is
+					if (j==1||j==16) tile[i][j]="Y"+tile[i][j].substring(1); //oceaan
+				}
 				//temples en bases zijn wat lastiger, omdat het veld als eerst in
 				//kwadranten verdeeld moet worden if i<a&&i<=b
-				//vervolgens wordt gekeken of er geen temple is, if t1==false
+				//vervolgens wordt gekeken of er geen temple is if t1==false
 				//dan wordt er gezegd dat een temple gemaakt mag worden en dat
 				//er een tempel is het kwadrant is
 				//vervolgens wordt de temple gemaakt.
-				if (r>p-200&&r<=p-100) { //temple
+				if (r>=800&&r<=900) { //temple
 					if (i>2 && i<=7 && t1==false) {temple = true; t1 = true;}
 					if (i>17 && i<=22 && t2==false) {temple = true; t2 = true;}
 					if (temple==true) {
 						tile[i][j]="T"+tile[i][j].substring(1);
 						temple = false;
-				}	}
+				} }
 				// voor bases geld hetzelfde als voor tempels
-				if (r>p-100&&r<=p) { //base
-					if (i>2 && i<=7 && b1==false) {base = true; b1 = true;}
-					if (i>7 && i<=12 && b2==false) {base = true; b2 = true;}
+				if (r>=900&&r<=1000) { //base
+					if (i>2 && i<=7 && b1==false) { base = true; b1 = true;}
+					if (i>7 && i<=12 && b2==false) { base = true; b2 = true;}
 					if (i>12 && i<=17 && b3==false) {base = true; b3 = true;}
 					if (i>17 && i<=22 && b4==false) {base = true; b4 = true;}
 					if (base==true) {
 						tile[i][j]="O"+tile[i][j].substring(1);
 						base = false;
-				} 	}
-				//plains
-				if (r>0&&r<=p-200) tile[i][j]="`"+tile[i][j].substring(1);
+				} }
 				
 				//repairing non spawned temples and bases
 				//omdat soms op een plaats een tempel wil spawnen,
@@ -130,25 +133,28 @@ public class World {
 				//is, blijft de waarde ongewijzigd en dat moet een 
 				//plain worden
 				if ( tile[i][j].substring(0,1).contains("0") ) tile[i][j] = "`"+tile[i][j].substring(1);
-		}}
+			}
+		}
 		
 		//growing sea
 		//als eerst kijkt die of er een oceanspawn blok is (Y)
 		//vervolgens wordt er in de omringende blokken, 7x5
 		//een tijdelijk waterblok gezet, zie: growSea()
 		for (i=1;i<=24;i++) { for (j=1;j<=16;j++) {
-			if ( tile[i][j].substring(0,1).contains("Y") ) {
-				int k; int l;
-				for (k=i-3;k<=i+3;k++) {  for (l=j-3;l<=j+3;l++) { growSea(i,j,k,l); } }
-				for (k=i+3;k>=i-3;k--) {  for (l=j-3;l<=j+3;l++) { growSea(i,j,k,l); } }
-				for (k=i-3;k<=i+3;k++) {  for (l=j+3;l>=j-3;l--) { growSea(i,j,k,l); } }
-				for (k=i+3;k>=i-3;k--) {  for (l=j+3;l>=j-3;l--) { growSea(i,j,k,l); } }
-		}} 	}
+				if ( tile[i][j].substring(0,1).contains("Y") ) {
+					int k; int l;
+					for (k=i-3;k<=i+3;k++) {  for (l=j-3;l<=j+3;l++) { growSea(i,j,k,l); } }
+					for (k=i+3;k>=i-3;k--) {  for (l=j-3;l<=j+3;l++) { growSea(i,j,k,l); } }
+					for (k=i-3;k<=i+3;k++) {  for (l=j+3;l>=j-3;l--) { growSea(i,j,k,l); } }
+					for (k=i+3;k>=i-3;k--) {  for (l=j+3;l>=j-3;l--) { growSea(i,j,k,l); } }
+		} } }
 		//hier wordt de tijdelijke waterbblokken en de
 		//water source blokken verandert in een waterblok
 		//ook wordt de afgekeurde waterblokken teruggezet
 		//naar plains
 		for (i=1;i<=24;i++) { for (j=1;j<=16;j++) { if ( tile[i][j].substring(0,1).contains("y") ) tile[i][j] = "`"+tile[i][j].substring(1); } }
+		for (i=1;i<=24;i++) { for (j=1;j<=16;j++) { if ( tile[i][j].substring(0,1).contains("Y") ) tile[i][j] = "I"+tile[i][j].substring(1); } }
+		for (i=1;i<=24;i++) { for (j=1;j<=16;j++) { if ( tile[i][j].substring(0,1).contains("I") ) tile[i][j] = "~"+tile[i][j].substring(1); } }
 		
 
 		//growing forest and dunes
@@ -173,41 +179,23 @@ public class World {
 		for (i=1;i<=24;i++) { for (j=1;j<=16;j++) { 
 			if ( tile[i][j].substring(0,1).contains("j") ) tile[i][j] = "i"+tile[i][j].substring(1);
 			if ( tile[i][j].substring(0,1).contains("d") ) tile[i][j] = "-"+tile[i][j].substring(1);
-		}}
+			} }
 		
-		//growing ravines and rivers
-		for (i=1;i<=24;i++) { for (j=1;j<=16;j++) { 
-			int r = randomRange(0,100);
-			if (tile[i][j].substring(0,1).contains("X")&&r>0&&r<=25) {growPreset("Ravine",i,j,-2,0);growPreset("Ravine",i,j,+2,0);growPreset("Ravine",i,j,+1,0);growPreset("Ravine",i,j,-1,0);growPreset("Ravine",i,j,+2,+1);growPreset("Ravine",i,j,+3,+1);}
-			if (tile[i][j].substring(0,1).contains("X")&&r>25&&r<=50) {growPreset("Ravine",i,j,-3,+1);growPreset("Ravine",i,j,-1,0);growPreset("Ravine",i,j,-2,0);growPreset("Ravine",i,j,-3,-1);growPreset("Ravine",i,j,+1,0);growPreset("Ravine",i,j,+2,-1);growPreset("Ravine",i,j,-2,+1);growPreset("Ravine",i,j,+2,0);growPreset("Ravine",i,j,-2,-1);}
-			if (tile[i][j].substring(0,1).contains("X")&&r>50&&r<=75) {growPreset("Ravine",i,j,-2,-1);growPreset("Ravine",i,j,+1,0);growPreset("Ravine",i,j,0,-1);growPreset("Ravine",i,j,-1,-1);growPreset("Ravine",i,j,+1,+1);growPreset("Ravine",i,j,+2,+1);}
-			if (tile[i][j].substring(0,1).contains("X")&&r>75&&r<=100) { growPreset("Ravine",i,j,-2,+1);growPreset("Ravine",i,j,+2,0);growPreset("Ravine",i,j,+1,0);growPreset("Ravine",i,j,-1,+1);growPreset("Ravine",i,j,+3,-1);}
-			if (tile[i][j].substring(0,1).contains("~")&&r>0&&r<=100) {
-			if (j==2) {growPreset("River",i,j,0,-1);growPreset("River",i,j,-1,-1);}
-				if (j==3) {growPreset("River",i,j,+1,-1);growPreset("River",i,j,+1,-2);growPreset("River",i,j,0,-2);growPreset("River",i,j,0,-3);} 
-				if (j==4) {growPreset("River",i,j,+1,-1);growPreset("River",i,j,+1,-2);growPreset("River",i,j,0,-2);growPreset("River",i,j,0,-3);growPreset("River",i,j,+1,-4);} 
-				if (j==5) {growPreset("River",i,j,0,-1);growPreset("River",i,j,+1,-2);growPreset("River",i,j,+1,-3);growPreset("River",i,j,+1,-4);growPreset("River",i,j,0,-4);growPreset("River",i,j,0,-5);}
-				if (j==6) {growPreset("River",i,j,0,-1);growPreset("River",i,j,+1,-2);growPreset("River",i,j,+1,-3);growPreset("River",i,j,0,-3);growPreset("River",i,j,0,-4);growPreset("River",i,j,-1,-4);growPreset("River",i,j,-1,-5);growPreset("River",i,j,0,-6);} 
-				if (j==7) {growPreset("River",i,j,0,-1);growPreset("River",i,j,+1,-2);growPreset("River",i,j,+1,-3);growPreset("River",i,j,+2,-3);growPreset("River",i,j,+2,-4);growPreset("River",i,j,+1,-5);growPreset("River",i,j,0,-5);growPreset("River",i,j,0,-6);growPreset("River",i,j,0,-7);}
-		}}	}
-		for (i=1;i<=24;i++) { for (j=1;j<=16;j++) { if ( tile[i][j].substring(0,1).contains("x") ) tile[i][j] = "X"+tile[i][j].substring(1); } }
 		//removing grass, volle estethica, er kon niet gewerkt worden
 		//met spaties voor plains, dus gebruikte ik `, die worden nu 
 		//teruggezet naar spaties.
-		for (i=1;i<=24;i++) { for (j=1;j<=16;j++) { 
-			if ( tile[i][j].substring(0,1).contains("`") ) tile[i][j] = " "+tile[i][j].substring(1);
-			if ( tile[i][j].substring(0,1).contains("Y") ) tile[i][j] = "I"+tile[i][j].substring(1);
-			if ( tile[i][j].substring(0,1).contains("I") ) tile[i][j] = "~"+tile[i][j].substring(1); 
-		}}
+		for (i=1;i<=24;i++) { for (j=1;j<=16;j++) { if ( tile[i][j].substring(0,1).contains("`") ) tile[i][j] = " "+tile[i][j].substring(1); } }
 		
 		//Drawing
 		//compleet gejat en verwisseld y met x
 		//HEEL IRRITANT
-		for ( i = 1; i < tile.length; i++) {
+		/* for ( i = 1; i < tile.length; i++) {
 		    for ( j = 1; j < tile[i].length; j++) {
-		        System.out.print(tile[i][j] + " ");
+		    	System.out.print(tile[i][j] + " ");
 		    }
 		    System.out.println();
 		}
+		*/
+		
 	}
 }
