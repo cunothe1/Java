@@ -58,7 +58,7 @@ public class Frame extends Application  {
     	Image dunes = new Image("file:C:\\Chub\\Cfiles\\DEV\\Java\\GameFX\\plaatjes\\plains.png"); // de afbeeldingen moeten zelf gemaakt worden en ze moeten 50x50 zijn !!!!
     	Image mountain = new Image("mountain.png");
     	Image river = new Image("file:C:\\Chub\\Cfiles\\DEV\\Java\\GameFX\\plaatjes\\plains.png");
-    	Image ravine = new Image("file:C:\\Chub\\Cfiles\\DEV\\Java\\GameFX\\plaatjes\\plains.png");
+    	Image ravine = new Image("plains.png");
     	Image plains = new Image("plains.png");	
     	Image ocean = new Image("file:C:\\Chub\\Cfiles\\DEV\\Java\\GameFX\\plaatjes\\plains.png");
     	int a = 150; //x-co voor tabel
