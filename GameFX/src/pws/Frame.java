@@ -33,12 +33,12 @@ public class Frame extends Application  {
     @Override
     public void start (Stage primaryStage) {
     	World world = new World(); //hier de wereld aanmaken
-    	world.worldGeneration(30,25,5,10,4,10); //uitvoeren worldGeneration
+    	world.worldGeneration(30,25,5,10,4,15); //uitvoeren worldGeneration
     	
     	
-        primaryStage.setTitle("GOGOGO");
+        primaryStage.setTitle("De game");
         Group root = new Group();
-        Canvas canvas = new Canvas(1550, 1000); // border
+        Canvas canvas = new Canvas(1200, 800); // border
         GraphicsContext g = canvas.getGraphicsContext2D();
         
         draw(g, world); //aanstellen van de variabelen voor draw methode
@@ -55,12 +55,13 @@ public class Frame extends Application  {
         String[][] c = w.getTile(); // c = tile[][]
     	g.setStroke(Color.BLACK);
     	Image forest = new Image("forest.png");
-    	Image dunes = new Image("file:C:\\Chub\\Cfiles\\DEV\\Java\\GameFX\\plaatjes\\plains.png"); // de afbeeldingen moeten zelf gemaakt worden en ze moeten 50x50 zijn !!!!
+    	Image dunes = new Image("dunes.png"); // de afbeeldingen moeten zelf gemaakt worden en ze moeten 50x50 zijn !!!!
     	Image mountain = new Image("mountain.png");
-    	Image river = new Image("file:C:\\Chub\\Cfiles\\DEV\\Java\\GameFX\\plaatjes\\plains.png");
-    	Image ravine = new Image("plains.png");
+    	Image river = new Image("water.png");
+    	Image ravine = new Image("ravine.png");
     	Image plains = new Image("plains.png");	
-    	Image ocean = new Image("file:C:\\Chub\\Cfiles\\DEV\\Java\\GameFX\\plaatjes\\plains.png");
+    	Image temple = new Image("tempel.png");
+    	Image castle = new Image("castle.png");
     	int a = 150; //x-co voor tabel
         int b = 0; // y-co voor tabel
         for(int i = 1; i<=16; i++) { //loop voor tabel maken
@@ -76,26 +77,29 @@ public class Frame extends Application  {
         int e = 0; // y-co voor landschappen 
         for (int j = 1; j <= 16; j++) {
 		    for (int i = 1; i <= 24; i++) {
-		    	if(c[i][j].contains("i")) { //FOREST
+		    	if(c[i][j].substring(0,1).contains("i")) { //FOREST
 		    		g.drawImage(forest,d,e);
 		    	}
-		    	if(c[i][j].contains("-")) { //DUNES
+		    	if(c[i][j].substring(0,1).contains("-")) { //DUNES
 		    		g.drawImage(dunes,d,e);
 		    	}
-		    	if(c[i][j].contains("M")) { //MOUNTAIN
+		    	if(c[i][j].substring(0,1).contains("M")) { //MOUNTAIN
 		    		g.drawImage(mountain,d,e);
 		    	}
-		    	if(c[i][j].contains("~")) { //WATER
+		    	if(c[i][j].substring(0,1).contains("~")) { //WATER
 		    		g.drawImage(river,d,e);
 		    	}
-		    	if(c[i][j].contains("X")) { //RAVINE
+		    	if(c[i][j].substring(0,1).contains("X")) { //RAVINE
 		    		g.drawImage(ravine,d,e);
 		    	}
-		    	if(c[i][j].contains(" ")) { //Plains
+		    	if(c[i][j].substring(0,1).contains(" ")) { //Plains
 		    		g.drawImage(plains,d,e);
 		    	}
-		    	if(c[i][j].contains("~")) { //WATER
-		    		g.drawImage(ocean,d,e);
+		    	if(c[i][j].substring(0,1).contains("O")) { //WATER
+		    		g.drawImage(castle,d,e);
+		    	}
+		    	if(c[i][j].substring(0,1).contains("T")) { //WATER
+		    		g.drawImage(temple,d,e);
 		    	}
 		    	 d += 50;
 		    }
