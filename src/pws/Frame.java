@@ -2,9 +2,12 @@ package pws;
 
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.awt.MouseInfo;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -14,6 +17,7 @@ import javax.swing.WindowConstants;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -30,11 +34,13 @@ public class Frame extends Application  {
     public static void main(String[] args) {
         launch(args);
     }
-    
+    	Warrior warrior = new Warrior(); // UNIT CREATION
+    	Archer archer = new Archer(); // UNIT CREATION
+    	Lancer lancer = new Lancer(); // UNIT CREATION
     @Override
     public void start (Stage primaryStage) {
     	World world = new World(); //hier de wereld aanmaken
-    	Characters character = new Characters(); // chara obj maken
+    	
     	world.worldGeneration(30,25,5,10,4,15); //uitvoeren worldGeneration
     	
     	
@@ -45,12 +51,33 @@ public class Frame extends Application  {
         
         draw(g, world); //aanstellen van de variabelen voor draw methode
         root.getChildren().add(canvas);
-        Rectangle player = new Rectangle(); // character in wereld spawnen binnen de grenzen
+        
+        Rectangle player = new Rectangle(); // character in wereld spawnen binnen de grenzen // WARRIOR
         player.setWidth(30);
         player.setHeight(30);
-        player.setX(character.getX() * 50 + 160);
-        player.setY(character.getY() * 50 + 10);
-        root.getChildren().add(player);
+        player.setFill(Color.BLUE);
+        player.setX(warrior.getX()); 
+        player.setY(warrior.getY()); 
+        
+        Rectangle player1 = new Rectangle(); //ARCHER
+        player1.setWidth(30);
+        player1.setHeight(30);
+        player1.setFill(Color.RED);
+        player1.setX(archer.getX());
+        player1.setY(archer.getY());
+        
+        Rectangle player2 = new Rectangle(); // LANCER
+        player2.setWidth(30);
+        player2.setHeight(30);
+        player2.setFill(Color.GREEN);
+        player2.setX(lancer.getX());
+        player2.setY(lancer.getY());
+        
+        
+        root.getChildren().add(player); // HET IS IRRITANT MAAR BELANGRIJK OM ELKE PLAYER MET ROOT.GETCH... TE ADDEN
+        root.getChildren().add(player1); // IMPORTANTE !!!
+        root.getChildren().add(player2); // HARDCODE MAAR MOEILIJK ANDERS
+        
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         // Canvas opzetten, een frame bouwen, maken van draw variabele g
@@ -118,5 +145,13 @@ public class Frame extends Application  {
         
   
     }
-    
+    private void mouseCheck(MouseEvent event) {
+    	int mouseY = MouseInfo.getPointerInfo().getLocation().y;
+        int mouseX = MouseInfo.getPointerInfo().getLocation().x;    
+        if ((mouseX == warrior.getX()) && (mouseY == warrior.getY())) {
+        	//MOET NOG AFGEMAAKT WORDEN met een code dat mogelijk maakt dat delen van de map gemarkeerd wordt
+        	//Dus if mouseclicked ... hiervoor moet er eerst een code gemaakt worden voor mouseclicked. 
+        	//Daarnaast moet er ook een code gemaakt worden voor het bewegen van units.
+        }
+    }
 }

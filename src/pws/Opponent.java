@@ -2,7 +2,7 @@ package pws;
 
 import java.util.Random;
 
-public class Characters {
+public class Opponent {
   private int health;
   private int attack;
   private int defense;
@@ -10,12 +10,17 @@ public class Characters {
   private int y;
   private int mrange;
   private int arange;
-  
-  public Characters() {
+  /*
+   * WEET NOG NIET OF DIT WERKT, HET ZOU HANDIGER ZIJN ALS WE ALLES GEWOON IN CHARACTERS KUNNNE STOPPEN DUS 
+   * NU VOORLOPIG DOOR MET ALLEEN 1 KANT IPV 2
+   * 
+   * 
+   */
+  public Opponent() {
 	  // Spawn coordinaat 
 	  Random r = new Random();
-	  setX(r.nextInt((3 - 1) + 1)* 50 + 160);
-	  setY(r.nextInt((16 - 1) + 1)* 50 + 10);
+	  setX(r.nextInt((21 - 18) + 1)+ 17);
+	  setY(r.nextInt((16 - 1) + 1));
   }
   
   public int getHealth() {
@@ -72,29 +77,5 @@ public class Characters {
   
   public void setArange(int arange) {
 	  this.arange = arange;
-  }
-  
-  public void Move(int x, int y, int mrange) {
-
-	  x = this.x;
-	  y = this.y;
-	  mrange = this.mrange;
-	  if (x >= 160) { // MOET HIER NOG EEN NAAR RECHTS COMMAND TOEVOEGEN, WEET ALLEEN NIET HOE			  
-		  x = x+(mrange*50);
-	  }
-	  
-	  if (x >= 160) {	// MOET HIER NOG EEN NAAR LINKS COMMAND TOEVOEGEN	  
-		  x = x-(mrange*50);
-	  }
-	  
-	  if (y >= 10) {	// MOET HIER NOG EEN NAAR BOVEN COMMAND TOEVOEGEN	  
-		  y = y+(mrange*50);
-	  }
-	  
-	  if (y >= 10) {	// MOET HIER NOG EEN NAAR BENENDEN COMMAND TOEVOEGEN	  
-		  y = y-(mrange*50);
-	  }//bij deze code hoeft deze parameters zoals x>= 160 eigenlijk er niet in, maar gewoon if clicked, maar keyboard check en
-	  //mouse check codes zijn moeilijk te begrijpen en vinden dus moet ff overdoen 
-	  
   }
 }
