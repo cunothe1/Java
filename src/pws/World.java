@@ -2,7 +2,10 @@ package pws;
 import java.util.Random;
 
 public class World {
-	public static String tile[][] = new String[25][17];
+	//=================================================================================================================
+	//part 1 World genereation
+	//=================================================================================================================
+	public static String[][] tile = new String[25][17];
 	
 	public String[][] getTile() {
 		return tile;
@@ -193,5 +196,83 @@ public class World {
 		}}
 		
 		
+	}
+
+	//=================================================================================================================
+	//part 2 Units
+	//=================================================================================================================
+	/*Unit database
+	 * 0 unittype
+	 * 1  Accuracy
+	 * 2  Activated
+	 * 3  Damage
+	 * 4  Defense
+	 * 5  Health
+	 * 6  Range
+	 * 7  Stamina
+	 * 8  Selected
+	 * 9  x
+	 * 10 y
+	 * 11 team
+	 * 12 protected
+	 * 13 RealX
+	 * 14 RealY
+	 */
+	public int unitNew = 0;  //The amount of existing objects, used in for loops
+	Characters unit[] = new Characters[255]; //the unitlist with a current cap of 255
+	public int unitAt[][] = new int [24][16]; //the current unit on a certain tile
+	
+	public int[][] getUnitAt() {
+		return unitAt;
+	} //MEANT FOR REFERENCES IN UNIT
+	
+	public void setUnitAt(int i, int j, int variable) {
+		unitAt[i][j] = variable;
+	}
+	
+	/*syntax unitAdd("name", teamnumber);
+	 * Adds a unit and gives it an ID
+	 * */
+	public void unitAdd(String type, int team) {
+		unitNew+=1;
+		if (type=="archer") unit[unitNew] = new Archer();
+		//else if (type=="swordsman") unit[unitNew] = new Swordsman();
+		else if (type=="lancer") unit[unitNew] = new Lancer();
+		//else if (type=="commander") unit[unitNew] = new Commander();
+		//else if (type=="healer") unit[unitNew] = new Healer();
+		//else if (type=="builder") unit[unitNew] = new Builder();
+		//else if (type=="paladin") unit[unitNew] = new Paladin();
+		//else if (type=="knight") unit[unitNew] = new Knight();
+		//else if (type=="mage") unit[unitNew] = new Mage();
+		//else if (type=="trebuchet") unit[unitNew] = new Trebuchet();
+		//else if (type=="assassin") unit[unitNew] = new Assassin();
+		//else if (type=="summoner") unit[unitNew] = new Summoner();
+		//else if (type=="summoned") unit[unitNew] = new Summoned();
+		//else if (type=="houndmaster") unit[unitNew] = new Houndmaster();
+		//else if (type=="templar") unit[unitNew] = new Templar();
+		else return;
+		unit[unitNew].setInfo(11, team);
+		unit[unitNew].setInfo(2, 0);
+	}
+	
+	
+	/* syntax unitKill(unit ID);
+	 * Kills an ID by setting its coords to 0
+	 * an activates and changes the team of the target
+	 * */
+	public void unitKill(int ID) {
+		unit[ID].setInfo(9, 0); // x naar 0
+		unit[ID].setInfo(10, 0); // y naar 0
+		unit[ID].setInfo(2, 1); //altijd al geactiveerd
+		unit[ID].setInfo(11, 0); //naar team 0
+	}
+	
+	/*syntax unitPlace(x,y);
+	 * place a unit on a specific spot in tile cords
+	 * */
+	public void unitPlace(int ID, int x, int y) {
+		unit[ID].setX(x*50+160);
+		unit[ID].setY(y*50+10);
+		unitAt[x][y]=ID;
 	}
 }

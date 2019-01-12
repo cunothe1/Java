@@ -3,11 +3,12 @@ package pws;
 public class Lancer extends Characters {
 	
 	public Lancer() {
-		setHealth(100);
-		setAttack(100);
-		setDefense(50);
-		setMrange(2);
-		setArange(2);
+		setInfo(0,3);
+		setInfo(1,80);
+		setInfo(3,100);
+		setInfo(4,50);
+		setInfo(5,100);
+		setInfo(6,2);
+		setInfo(7,2);
 	}
-	
 }
