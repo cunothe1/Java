@@ -193,6 +193,15 @@ public class World {
 			if ( tile[i][j]=="y" ) tile[i][j] = "I";
 			if ( tile[i][j]=="Y" ) tile[i][j] = "I";
 			if ( tile[i][j]=="I" ) tile[i][j] = "~";
+			if ( tile[i][j]=="i" ) tile[i][j] = "forest";
+	    	if ( tile[i][j]=="-" ) tile[i][j] = "dunes";
+	    	if ( tile[i][j]=="M" ) tile[i][j] = "mountain";
+	    	if ( tile[i][j]=="~" ) tile[i][j] = "water";
+	    	if ( tile[i][j]=="X" ) tile[i][j] = "ravine";
+	    	if ( tile[i][j]==" " ) tile[i][j] = "plains";
+	    	if ( tile[i][j]=="O" ) tile[i][j] = "base";
+	    	if ( tile[i][j]=="T" ) tile[i][j] = "temple";
+	
 		}}
 		
 		
@@ -222,8 +231,15 @@ public class World {
 	Characters unit[] = new Characters[255]; //the unitlist with a current cap of 255
 	public int unitAt[][] = new int [24][16]; //the current unit on a certain tile
 	
-	public int[][] getUnitAt() {
-		return unitAt;
+	
+	public Characters getUnitAt(int x, int y) {
+		Characters u=unit[1];
+		for (int i=1;i<unitNew;i++) {
+			if (unit[i].getInfo(9)==x&&unit[i].getInfo(10)==y) {
+				u=unit[i];
+			}
+		}
+		return u;
 	} //MEANT FOR REFERENCES IN UNIT
 	
 	public void setUnitAt(int i, int j, int variable) {
@@ -235,6 +251,7 @@ public class World {
 	 * */
 	public void unitAdd(String type, int team) {
 		unitNew+=1;
+		if (type=="empty") unit[unitNew] = new Empty();
 		if (type=="archer") unit[unitNew] = new Archer();
 		//else if (type=="swordsman") unit[unitNew] = new Swordsman();
 		else if (type=="lancer") unit[unitNew] = new Lancer();
@@ -274,5 +291,6 @@ public class World {
 		unit[ID].setX(x*50+160);
 		unit[ID].setY(y*50+10);
 		unitAt[x][y]=ID;
+		
 	}
 }
